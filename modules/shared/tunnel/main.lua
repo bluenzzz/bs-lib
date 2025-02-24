@@ -8,6 +8,33 @@ end
 
 Tunnel = {}
 
+table.maxn = function(t)
+	local max = 0
+	for k,v in pairs(t) do
+		local n = tonumber(k)
+		if n and n > max then max = n end
+	end
+	return max
+end
+
+local wait = function(self)
+	local rets = Citizen.Await(self.p)
+	if not rets then rets = self.r end
+	return table.unpack(rets,1,table.maxn(rets))
+end
+
+local areturn = function(self,...)
+	self.r = {...}; self.p:resolve(self.r)
+end
+
+async = function(func)
+	if func then
+		Citizen.CreateThreadNow(func)
+	else
+		return setmetatable({ wait = wait, p = promise.new() }, { __call = areturn })
+	end
+end
+
 local tunnelResolve = function(itable, key)
     local mtable = getmetatable(itable)
     local iname, ids, callbacks, identifier = mtable.name, mtable.tunnel_ids, mtable.tunnel_callbacks, mtable.identifier
