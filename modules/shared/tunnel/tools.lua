@@ -1,6 +1,8 @@
+Tools = {}
+
 local IDGenerator = {}
 
-newIDGenerator = function()
+Tools.newIDGenerator = function()
     local r = setmetatable({}, { __index = IDGenerator })
     r:construct()
     return r
@@ -28,3 +30,5 @@ end
 function IDGenerator:free(id)
     table.insert(self.ids,id)
 end
+
+exports('Tools', function() return Tools; end)

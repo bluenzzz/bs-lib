@@ -112,7 +112,7 @@ end
 
 Tunnel.getInterface = function(name, identifier)
     if (identifier) then
-        local ids = newIDGenerator()
+        local ids = Tools.newIDGenerator()
         local callbacks = {}
 
         local r = setmetatable({}, { 
