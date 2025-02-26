@@ -7,7 +7,8 @@ author 'bluenzzz'
 description 'BLUEN LIB'
 version '1.0.0'
 
+client_script 'modules/client/**/**/*'
 server_script 'modules/server/**/*'
-shared_scripts { 'modules/shared/shared.lua', 'modules/shared/functions.lua', 'modules/shared/**/*' }
+shared_scripts { 'modules/shared/shared.lua', 'modules/shared/**/*' }
 
 files { 'modules/shared/**/*' }
