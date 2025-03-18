@@ -1,10 +1,10 @@
-func = {}
+Lib.Functions = {}
 
 local cache = { anim = {} }
 
 --==========================================================
 
-func.loadModel = function(mhash)
+Lib.Functions.loadModel = function(mhash)
     if (IsModelValid(mhash)) then
         local function Request(model)
             while (not HasAnimDictLoaded(model)) do
@@ -26,7 +26,7 @@ end
 
 --==========================================================
 
-func.loadAnim = function(anim)
+Lib.Functions.loadAnim = function(anim)
     local invokingResource = GetInvokingResource()
     if not cache.anim[invokingResource] then
         cache.anim[invokingResource] = {}
@@ -50,7 +50,7 @@ func.loadAnim = function(anim)
     end
 end
 
-func.unloadAnim = function(dict)
+Lib.Functions.unloadAnim = function(dict)
     if (dict) then
         RemoveAnimDict(dict)
     else
@@ -65,5 +65,3 @@ func.unloadAnim = function(dict)
         end
     end
 end
-
-exports('Functions', function() return func; end)

@@ -1,12 +1,26 @@
+SERVER = IsDuplicityVersion()
+
+Lib = {}
+
+Lib.Tools = {}
+Lib.Tunnel = {}
+Lib.Tunnel.delays = {}
+
 if SERVER then
     TriggerRemoteEvent = TriggerClientEvent
     RegisterLocalEvent = RegisterServerEvent
+
+    exports('GetLibObject', function()
+        return Lib
+    end)
 else
     TriggerRemoteEvent = TriggerServerEvent
     RegisterLocalEvent = RegisterNetEvent
-end
 
-Tunnel = {}
+    exports('GetLibObject', function()
+        return Lib
+    end)
+end
 
 table.maxn = function(t)
 	local max = 0
@@ -35,6 +49,10 @@ async = function(func)
 	end
 end
 
+Lib.Tunnel.setDestDelay = function(dest, delay)
+  Lib.Tunnel.delays[dest] = {delay, 0}
+end
+
 local tunnelResolve = function(itable, key)
     local mtable = getmetatable(itable)
     local iname, ids, callbacks, identifier = mtable.name, mtable.tunnel_ids, mtable.tunnel_callbacks, mtable.identifier
@@ -55,7 +73,7 @@ local tunnelResolve = function(itable, key)
             r = async()
         end
 
-        local delay_data = (dest and Tunnel.delays[dest]) or {0, 0}
+        local delay_data = (dest and Lib.Tunnel.delays[dest]) or {0, 0}
         local add_delay = delay_data[1]
         delay_data[2] = delay_data[2] + add_delay
 
@@ -88,7 +106,7 @@ local tunnelResolve = function(itable, key)
     return fcall
 end
 
-Tunnel.bindInterface = function(name, interface)
+Lib.Tunnel.bindInterface = function(name, interface)
     RegisterLocalEvent(name..':tunnel_req')
     AddEventHandler(name..':tunnel_req', function(member, args, identifier, rid)
         local source = source
@@ -110,9 +128,9 @@ Tunnel.bindInterface = function(name, interface)
     end)
 end
 
-Tunnel.getInterface = function(name, identifier)
+Lib.Tunnel.getInterface = function(name, identifier)
     if (identifier) then
-        local ids = Tools.newIDGenerator()
+        local ids = Lib.Tools.newIDGenerator()
         local callbacks = {}
 
         local r = setmetatable({}, { 
@@ -136,5 +154,3 @@ Tunnel.getInterface = function(name, identifier)
         return r
     end
 end
-
-exports('Tunnel', function() return Tunnel; end)
