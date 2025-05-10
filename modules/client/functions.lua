@@ -1,14 +1,14 @@
 Lib.Functions = {}
 
-local cache = { anim = {} }
+local cache = { anim = {}, model = {} }
 
 --==========================================================
 
 Lib.Functions.loadModel = function(mhash)
     if (IsModelValid(mhash)) then
         local function Request(model)
-            while (not HasAnimDictLoaded(model)) do
-                RequestAnimDict(model)
+            while (not HasModelLoaded(model)) do
+                RequestModel(model)
                 Citizen.Wait(100)
             end
         end
@@ -20,6 +20,28 @@ Lib.Functions.loadModel = function(mhash)
             end
         else
             Request(mhash)
+        end
+        return true
+    end
+    return false
+end
+
+Lib.Functions.unloadModel = function(mhash)
+    if mhash then
+        if IsModelValid(mhash) then
+            SetModelAsNoLongerNeeded(mhash)
+        end
+    else
+        local invokingResource = GetInvokingResource()
+
+        local models = cache.model[invokingResource]
+        if models then
+            for i = 1, #models do
+                local model = models[i]
+                if IsModelValid(model) then
+                    SetModelAsNoLongerNeeded(model)
+                end
+            end
         end
     end
 end
@@ -37,7 +59,9 @@ Lib.Functions.loadAnim = function(anim)
             RequestAnimDict(dict)
             Citizen.Wait(100)
         end
+
         table.insert(cache.anim[invokingResource], dict)
+        return true
     end
 
     if (type(anim) == 'table') then
@@ -46,7 +70,7 @@ Lib.Functions.loadAnim = function(anim)
             Request(dict)
         end
     else
-        Request(anim)
+        return Request(anim)
     end
 end
 
@@ -64,4 +88,18 @@ Lib.Functions.unloadAnim = function(dict)
             end
         end
     end
+end
+
+--==========================================================
+
+Lib.Functions.getGridZone = function(x, y)
+    local function gridChunk(x)
+	    return math.floor((x + 8192) / 128)
+    end
+    
+    local function toChannel(v)
+	    return (v['x'] << 8) | v['y']
+    end
+
+	return toChannel( vector2(gridChunk(x), gridChunk(y)) )
 end

@@ -6,8 +6,11 @@ author 'bluenzzz'
 description 'BLUEN LIB'
 version '1.0.0'
 
+ui_page_preload 'yes'
+ui_page 'web/index.html'
+
 client_script 'modules/client/**/**/*'
 server_script 'modules/server/**/*'
 shared_script 'modules/shared/*'
 
-files { 'modules/shared/*' }
+files { 'web/*' }
