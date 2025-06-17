@@ -4,13 +4,17 @@ lua54 'yes'
 
 author 'bluenzzz'
 description 'BLUEN LIB'
-version '1.0.0'
+version '1.0.1'
 
 ui_page_preload 'yes'
 ui_page 'web/index.html'
 
+shared_script {
+    'lib/*',
+    'modules/shared/*'
+}
+
 client_script 'modules/client/**/**/*'
 server_script 'modules/server/**/*'
-shared_script 'modules/shared/*'
 
 files { 'web/*' }
