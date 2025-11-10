@@ -4,7 +4,7 @@ lua54 'yes'
 
 author 'bluenzzz'
 description 'BLUEN LIB'
-version '1.0.2'
+version '1.0.3'
 
 ui_page_preload 'yes'
 ui_page 'web/index.html'
