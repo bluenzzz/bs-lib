@@ -49,7 +49,7 @@ end
 --==========================================================
 
 Lib.Functions.loadAnim = function(anim)
-    local invokingResource = GetInvokingResource()
+    local invokingResource = GetInvokingResource() or GetCurrentResourceName()
     if not cache.anim[invokingResource] then
         cache.anim[invokingResource] = {}
     end

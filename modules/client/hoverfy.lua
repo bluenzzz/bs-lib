@@ -51,6 +51,8 @@ Citizen.CreateThread(function()
     end
 end)
 
+--==========================================================
+
 Lib.Hoverfy.Insert = function(data)
     local gridZone = Lib.Functions.getGridZone(data.coords.x, data.coords.y)
 
@@ -71,7 +73,8 @@ end
 --==========================================================
 
 AddEventHandler('onClientResourceStop', function(resourceName)
-    for key, table in pairs(Locates) do
+    local oldLocates = Locates
+    for key, table in pairs(oldLocates) do
         for i = 1, #table do
             local data <const> = table[i]
             if (data) and data.resource == resourceName then
