@@ -1,0 +1,47 @@
+* {
+  padding: 0;
+  margin: 0;
+
+  box-sizing: border-box;
+  user-select: none;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body,
+select,
+textarea,
+button,
+input {
+  font-family: 'Montserrat', sans-serif;
+}
+
+button:focus {
+  border: 0;
+  outline: 0;
+}
+
+input:focus,
+select:focus {
+  outline: 0;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  height: 100vh;
+
+  margin: 0;
+  padding: 0;
+
+  position: relative;
+  font-size: 1.6rem;
+}
+
+#app {
+  width: 100%;
+  height: 100%;
+}

@@ -1,20 +1,43 @@
-fx_version 'bodacious'
-game 'gta5'
+use_experimental_fxv2_oal 'yes'
+fx_version 'cerulean'
+games { 'rdr3', 'gta5' }
 lua54 'yes'
 
+rdr3_warning 'I acknowledge that this is a prerelease build of RedM, and I am aware my resources *will* become incompatible once RedM ships.'
+
+name 'bs-lib'
 author 'bluenzzz'
-description 'BLUEN LIB'
-version '1.0.3'
+description 'A library of shared functions to be used in my scripts.'
+version '2.0.0'
+license 'Blue Studio'
+repository 'https://github.com/bluenzzz/bs-lib'
 
-ui_page_preload 'yes'
-ui_page 'web/index.html'
+ui_page 'web/dist/index.html'
 
-shared_script {
-    'lib/*',
-    'modules/shared/*'
+dependencies {
+    '/onesync'
 }
 
-client_script 'modules/client/**/**/*'
-server_script 'modules/server/**/*'
+shared_scripts {
+    'shared/utils.lua',
+    'core/init.lua',
+    'core/callback/shared.lua',
+    'core/locale/shared.lua'
+}
 
-files { 'web/*' }
+client_scripts {
+    'core/cache/client.lua',
+    'core/interface/client.lua',
+    'core/ped/client.lua',
+    'core/hoverfy/client.lua'
+}
+
+server_scripts {
+    'core/version/server.lua'
+}
+
+files {
+    'init.lua',
+    'imports/**/*.lua',
+    'web/dist/**/*'
+}
